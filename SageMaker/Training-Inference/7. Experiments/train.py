@@ -1,3 +1,4 @@
+
 from sklearn.neighbors import KNeighborsClassifier
 from os.path import join
 from io import BytesIO
@@ -17,12 +18,8 @@ logger.addHandler(logging.StreamHandler(sys.stdout))
 
 if 'SAGEMAKER_METRICS_DIRECTORY' in os.environ:
     log_file_handler = logging.FileHandler(join(os.environ['SAGEMAKER_METRICS_DIRECTORY'], "metrics.json"))
-    log_file_handler.setFormatter(
-    "{'time':'%(asctime)s', 'name': '%(name)s', \
-    'level': '%(levelname)s', 'message': '%(message)s'}"
-    )
     logger.addHandler(log_file_handler)
-    
+   
     
 def model_fn(model_dir):
     print('[-------------- INSIDE MODEL FN --------------]')
@@ -92,7 +89,7 @@ def train():
     y_test = train_df['class']
     acc = knn.score(X_test, y_test)
     print('Accuracy = {:.4f}%'.format(acc * 100))
-    logger.info('Test Accuracy: {:.4f}%'.format(acc * 100))
+    logger.info('Test Accuracy: {:.4f}%;\n'.format(acc * 100))
     print("------- [EVALUATION DONE!] -------")
 
 if __name__ == '__main__':
